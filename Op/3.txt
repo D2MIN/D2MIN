@@ -1,0 +1,45 @@
+int main() {
+	int n;
+	cin >> n;
+	int* a = new int[n];
+	for (int i = 0; i < n; i++) {
+		cin >> a[i];
+	}
+	int flag = 0;
+	//Проходим по массиву и проверяем на число которое в сумме цыфр дёт > 10
+	for (int i = 0; i < n; i++) {
+		int ch = a[i], sum = 0;
+		for (ch; abs(ch) > 0; ch /= 10) {
+			sum += ch % 10;
+		}
+		if (sum > 10) {
+			flag = 1;
+			break;
+		}
+	}
+	//Проверяем 1 условие
+	if (flag == 1) {
+		int count = 0;
+		for (int i = 0; i < n; i++) { 
+			if (a[i] % 2 == 0) {
+				count++;
+			}
+		}
+		cout << count;
+	}
+	//Иначе выполняем 2
+	else {
+		int sum = 0;
+		for (int i = 0; i < n; i++) {
+			if (a[i] < 0) {
+				sum += a[i];
+			}
+		}
+		cout << abs(sum);
+	}
+	delete[] a;
+}
+// колл 5
+// 999 2 4 6 3 = 3
+// колл 5
+// -1 2 -3 4 -5 = 9

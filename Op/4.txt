@@ -1,0 +1,41 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+	int n, m;
+	cin >> n; cin >> m;
+	int** a = new int* [n];
+	for (int i = 0; i < n; i++) {
+		a[i] = new int[m];
+		for (int j = 0; j < m; j++) {
+			cin >> a[i][j];
+		}
+	}
+	int pr = 1;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			// Проверяем на веше главной и не 0
+			if (j > i && a[i][j] > 0){
+				int col = 0, ch = a[i][j];
+				// подсчеткол цыфр
+				for (ch; abs(ch) > 0; ch /= 10) {
+					col ++;
+				}
+				// Проверка на колл цыфр
+				if (col % 2 == 0) {
+					pr *= a[i][j];
+				}
+			}
+		}
+	}
+	// Ввывод
+	cout << pr;
+}
+/*
+Пример
+3 3
+1 22 11
+2 12 11
+3 4 123
+Ответ = 2662
+*/

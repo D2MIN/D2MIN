@@ -1,0 +1,21 @@
+int main() {
+	int n, pr,sum = 0;
+	cin >> pr; cin >> n;
+	for (n; n != 0;) {
+		if (n % 2 == 0 && pr < 0) {
+			sum += pr;
+		}
+		pr = n;
+		cin >> n;
+		if (n == 0 && pr < 0) {
+			sum += pr;
+		}
+	}
+	cout << sum;
+}
+/*
+Примеры 
+-2 -2 -2 -4 0 = -10
+1 -2 3 -4 5 -6 0 = 0
+-1 2 -3 4 -5 6 0 = 9
+*/
