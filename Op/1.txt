@@ -7,9 +7,6 @@ int main() {
 		}
 		pr = n;
 		cin >> n;
-		if (n == 0 && pr < 0) {
-			sum += pr;
-		}
 	}
 	cout << sum;
 }
