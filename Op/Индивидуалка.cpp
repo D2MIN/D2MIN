@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 using namespace std;
 
 //1 2 3 4 5 6 0
@@ -29,7 +29,7 @@ void delete_list(List* head) {
 	}
 }
 
-void print_list(List*p) {
+void print_list(List* p) {
 	while (p != NULL) {
 		cout << p->data << " ";
 		p = p->next;
@@ -38,6 +38,7 @@ void print_list(List*p) {
 
 int point_a(List* p_1, List* p_2) {
 	int count = 0;
+	List* head = p_1;
 	while (p_1 != NULL) {
 		while (p_2 != NULL) {
 			if (p_1->data == p_2->data) {
@@ -48,13 +49,14 @@ int point_a(List* p_1, List* p_2) {
 			}
 			p_2 = p_2->next;
 		}
+		p_2 = head;
 		count = 0;
 		p_1 = p_1->next;
 	}
 	return 0;
 }
 
-void point_b(List* p_1,List*p_2,List*point, int n) {
+void point_b(List* p_1, List* p_2, List* point, int n) {
 	while (p_1 != NULL) {
 		if (p_1->data == n) {
 			point = p_1->next;
@@ -79,16 +81,16 @@ int main() {
 	List* head_1 = new List;
 	List* head_2 = new List;
 	List* head_3 = new List;
-	List* r_1 = new List,* p_1;
-	List* r_2 = new List,* p_2;
-	List* r_3 = new List,* p_3;
+	List* r_1 = new List, * p_1;
+	List* r_2 = new List, * p_2;
+	List* r_3 = new List, * p_3;
 
 	cout << "Введите список 1: " << endl;
 	int x; cin >> x;
 	head_1->data = x;
 	cin >> x;
-	create_list(head_1,r_1, x);
-	
+	create_list(head_1, r_1, x);
+
 	cout << "Введите список 2: " << endl;
 	cin >> x;
 	head_2->data = x;
@@ -119,7 +121,7 @@ int main() {
 		point_b(head_2, head_3, r_3, n);
 		print_list(head_2);
 	}
-	if(flag != 1 && flag != 2) {
+	if (flag != 1 && flag != 2) {
 		cerr << "Вы выбрали не верный вариант";
 	}
 
