@@ -1,0 +1,77 @@
+#include <iostream>
+using namespace std;
+
+struct list {
+	int info;
+	list* next, * prev;
+};
+int main()
+{
+	list* head, * p, * r;
+	int x;
+	head = new list;
+	cin >> x;
+	if (x != 0)
+	{
+		head->info = x;
+		p = head;
+		cin >> x;
+		while (x != 0)
+		{
+			r = new list;
+			r->info = x;
+			r->prev = p;
+			p->next = r;
+			p = r;
+			cin >> x;
+		}
+		head->prev = p;
+		p->next = head;
+	}
+	int sohranator,count = 0;
+	p = head->next;
+	int flag = 1;
+	while (p != head)
+	{
+		sohranator = p->info;
+		for (int i = 2; i <= sohranator; i++)
+		{	
+			if (sohranator == 2) {
+				break;
+			}
+			if (sohranator % i == 0 && i != sohranator) {
+				flag = 0;
+				break;
+			}
+		}
+		if (flag == 1)
+		{
+			while (sohranator > 0)
+			{
+				count++;
+				sohranator /= 10;
+			}
+			r = new list;
+			r->info = count;
+			r->next = p;
+			p->prev->next = r;
+		}
+		flag = 1;
+		count = 0;
+		p = p->next;
+	}
+	p = head->next;
+	cout << head->info << " ";
+	while (p != head)
+	{
+		cout << p->info << " ";
+		p = p->next;
+	}
+	p = head->next;
+	while (p != head)
+	{
+		r = p;
+		p = p->next;
+		delete r;
+	}
+}
