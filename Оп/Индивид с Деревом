@@ -1,0 +1,125 @@
+#include <iostream>
+using namespace std;
+
+struct Tree {
+	int data;
+	Tree* left;
+	Tree* right;
+};
+
+void addNode(Tree* root, int data) {
+	if (data < root->data) {
+		if (root->left == NULL) {
+			Tree* r;
+			r = new Tree;
+			r->data = data;
+			r->left = NULL;
+			r->right = NULL;
+			root->left = r;
+		}
+		else addNode(root->left, data);
+	}
+	else {
+		if (root->right == NULL) {
+			Tree* r;
+			r = new Tree;
+			r->data = data;
+			r->left = NULL;
+			r->right = NULL;
+			root->right = r;
+		}
+		else addNode(root->right, data);
+	}
+}
+
+Tree* construct() {
+	int x;
+	Tree* root = new Tree;
+	cin >> x;
+	root->data = x;
+	root->left = NULL;
+	root->right = NULL;
+	cin >> x;
+	while (x != 0) {
+		addNode(root, x);
+		cin >> x;
+	}
+
+	return root;
+}
+
+void print_nlr(Tree* root) {
+	if (root != NULL) {
+		print_nlr(root->left);
+		cout << root->data << " ";
+		print_nlr(root->right);
+	}
+}
+
+void Destroy(Tree* root) {
+	if (root == NULL)
+		return;
+	Destroy(root->left);
+	Destroy(root->right);
+	delete root;
+}
+
+int maxDepth(Tree* root) {
+	if (root == NULL) {
+		return 0;
+	}
+	else {
+		int leftDepth = maxDepth(root->left);
+		int rightDepth = maxDepth(root->right);
+		return max(leftDepth, rightDepth)+1;
+	}
+}
+
+int min_tree(Tree* root) {
+	if (root->left != NULL) {
+		min_tree(root->left);
+	}
+	else
+		return root->data;
+}
+
+void zamena(Tree* root, int min){
+	if (root != NULL) {
+		if (root->left == NULL && root->right == NULL) {
+			root->data = min;
+		}
+		zamena(root->left,min);
+		zamena(root->right,min);
+	}
+	
+}
+
+void zamena2(Tree* root, int X) {
+	if (root != NULL) {
+		if (root->left != NULL || root->right != NULL) {
+			root->data = X;
+		}
+		zamena2(root->left, X);
+		zamena2(root->right, X);
+	}
+}
+
+// Пример 1 замена всех листьев на минимум - 7 3 12 1 5 10 15
+// Пример 2 замена всех не листьев на введёный Х
+int main() {
+	setlocale(LC_ALL, "Russian");
+	cout << "Введите дерево (признак конца 0):" << endl;
+	Tree *root = construct();
+	if (maxDepth(root) < 5) {
+		int min = min_tree(root);
+		zamena(root, min);
+	}
+	else {
+		cout << "Введите Х: ";
+		int X; cin >> X;
+		zamena2(root,X);
+	}
+
+	print_nlr(root);
+	Destroy(root);
+}
