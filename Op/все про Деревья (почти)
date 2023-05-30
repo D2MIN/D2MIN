@@ -1,0 +1,74 @@
+#include <iostream>
+using namespace std;
+
+struct tree {
+	int key;
+	tree* left;
+	tree* right;
+};
+
+void tree_add(tree* root, int data) {
+	if (data > root->key) {
+		if (root->right == NULL) {
+			tree* r = new tree;
+			r->key = data;
+			root->right = r;
+			r->left = NULL;
+			r->right = NULL;
+		}
+		else {
+			tree_add(root->right, data);
+		}
+	}
+	else {
+		if (root->left == NULL) {
+			tree* r = new tree;
+			r->key = data;
+			root->left = r;
+			r->left = NULL;
+			r->right = NULL;
+		}
+		else {
+			tree_add(root->left, data);
+		}
+	}
+}
+
+void print_tree(tree* root) {
+	if (root != NULL) {
+		cout << root->key << " ";
+		print_tree(root->left);
+		print_tree(root->right);
+	}
+}
+
+void delete_tree(tree* root) {
+	if (root == NULL)
+		return;
+	delete_tree(root->left);
+	delete_tree(root->right);
+	delete root;
+}
+
+int count_tree(tree * root) {
+	if (root == NULL)
+		return 1;
+	return count_tree(root->left)+1;
+	return count_tree(root->right)+1;
+}
+
+int main() {
+	int x; cin >> x;
+	tree* root = new tree;
+	root->key = x;
+	root->left = NULL;
+	root->right = NULL;
+	cin >> x;
+	while (x != 0) {
+		tree_add(root, x);
+		cin >> x;
+	}
+
+	print_tree(root);
+	cout << count_tree(root);
+}
