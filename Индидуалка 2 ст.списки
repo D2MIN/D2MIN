@@ -1,0 +1,92 @@
+#include <iostream>
+using namespace std;
+
+struct d_list {
+	int info;
+	d_list* next, * prev;
+};
+
+int main() {
+	setlocale(LC_ALL, "Russian");
+	cout << "Введите список (признак окончания 0):" << endl;
+	int x; cin >> x;
+	d_list* head, * p, * r;
+	head = new d_list;
+	head->info = x;
+	head->next = NULL;
+	head->prev = NULL;
+	p = head;
+	cin >> x;
+	int count = 1;
+	while (x != 0) {
+		r = new d_list;
+		r->info = x;
+		r->prev = p;
+		p->next = r;
+		r->next = NULL;
+		p = r;
+		cin >> x;
+		count++;
+	}
+	d_list *end = p;
+
+	p = head;
+	int N = 0;
+	int maxim = p->info * end->info;
+	while (N != (count / 2)) {
+		if (maxim < p->info * end->info) {
+			maxim = p->info * end->info;
+		}
+		p = p->next;
+		end = end->prev;
+		N++;
+	}
+
+	cout << "Максимальное произведение равноудаленых элементов = " << maxim << endl;
+
+	if (maxim % 2 != 0) {
+		cout << "Т.к оно делиться на 2 то новый сисок будет выгледеть так :" << endl;
+		p = head;
+		while (p->next != NULL) {
+			if (p->info % 2 == 0) {
+				r = new d_list;
+				r->info = p->info * p->info;
+				p->next->prev = r;
+				r->next = p->next;
+				p->next = r;
+				r->prev = p;
+				p = p->next;
+			}
+			p = p->next;
+		}
+		if (p->info % 2 == 0) {
+			r = new d_list;
+			r->info = p->info * p->info;
+			p->next = r;
+			r->next = NULL;
+		}
+		p = head;
+		while (p != NULL) {
+			cout << p->info << " ";
+			p = p->next;
+		}
+	}
+	else {
+		cout << "Т.к оно не делиться на 2 то сисок будет выгледеть так :" << endl;
+		p = head;
+		while (p != NULL) {
+			cout << p->info << " ";
+			p = p->next;
+		}
+	}
+
+	p = head;
+	while (p != NULL) {
+		r = p;
+		p = p->next;
+		delete r;
+	}
+}
+
+//1 2 3 4 5 9 7 8 9 10 0 - max % 2 
+//1 2 3 4 5 6 7 8 9 10 0 - max !% 2
