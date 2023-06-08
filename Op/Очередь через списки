@@ -3,7 +3,6 @@ using namespace std;
 
 struct Queue {
 	int data;
-	Queue* prev;
 	Queue* next;
 };
 
@@ -15,7 +14,6 @@ bool empty(Queue* head) {
 void create(Queue*& head, int x) {
 	Queue* r = new Queue;
 	r->data = x;
-	r->prev = head;
 	r->next = NULL;
 	head->next = r;
 	head = r;
@@ -41,7 +39,6 @@ int main() {
 	Queue* head = new Queue;
 	head->data = x;
 	head->next = NULL;
-	head->prev = r;
 	r = head;
 	cin >> x;
 	while (x != 0) {
