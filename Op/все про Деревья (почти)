@@ -1,74 +1,75 @@
 #include <iostream>
 using namespace std;
 
-struct tree {
-	int key;
-	tree* left;
-	tree* right;
+//12 10 16 9 11 15 17 8 14 13 7 6 0
+//12 10 16 9 11 15 17 14 13  0
+
+struct Tree {
+	int info;
+	Tree* left;
+	Tree* right;
 };
 
-void tree_add(tree* root, int data) {
-	if (data > root->key) {
-		if (root->right == NULL) {
-			tree* r = new tree;
-			r->key = data;
-			root->right = r;
+int create_tree(Tree* root,int data) {
+	if (root->info > data) {
+		if (root->left == NULL) {
+			Tree* r = new Tree;
+			r->info = data;
 			r->left = NULL;
 			r->right = NULL;
+			root->left = r;
 		}
 		else {
-			tree_add(root->right, data);
+			return create_tree(root->left, data);
 		}
 	}
 	else {
-		if (root->left == NULL) {
-			tree* r = new tree;
-			r->key = data;
-			root->left = r;
+		if (root->right == NULL) {
+			Tree* r = new Tree;
+			r->info = data;
 			r->left = NULL;
 			r->right = NULL;
+			root->right = r;
 		}
 		else {
-			tree_add(root->left, data);
+			return create_tree(root->right, data);
 		}
 	}
 }
 
-void print_tree(tree* root) {
+void delete_tree(Tree* root) {
 	if (root != NULL) {
-		cout << root->key << " ";
-		print_tree(root->left);
-		print_tree(root->right);
+		delete_tree(root->left);
+		delete_tree(root->right);
+		delete root;
 	}
 }
 
-void delete_tree(tree* root) {
-	if (root == NULL)
-		return;
-	delete_tree(root->left);
-	delete_tree(root->right);
-	delete root;
+void print_tree(Tree* root) {
+	if (root != NULL) {
+		print_tree(root->left);
+		print_tree(root->right);
+		cout << root->info << " ";
+	}
 }
 
-int count_tree(tree * root) {
-	if (root == NULL)
-		return 1;
-	return count_tree(root->left)+1;
-	return count_tree(root->right)+1;
+int coll_v(Tree* root) {
+	if (root == NULL) 
+		return 0;
+	return max(coll_v(root->left) +1 , coll_v(root->right) +1);
 }
 
 int main() {
+	Tree* root = new Tree;
 	int x; cin >> x;
-	tree* root = new tree;
-	root->key = x;
-	root->left = NULL;
-	root->right = NULL;
+	root->info = x; root->left = NULL; root->right = NULL;
 	cin >> x;
 	while (x != 0) {
-		tree_add(root, x);
+		create_tree(root, x);
 		cin >> x;
 	}
 
 	print_tree(root);
-	cout << count_tree(root);
+	cout << endl << coll_v(root)-1;
+	delete_tree(root);
 }
