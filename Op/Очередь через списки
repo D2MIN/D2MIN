@@ -1,0 +1,54 @@
+#include <iostream>
+using namespace std;
+
+struct Queue {
+	int data;
+	Queue* prev;
+	Queue* next;
+};
+
+bool empty(Queue* head) {
+	return head == NULL;
+}
+
+
+void create(Queue*& head, int x) {
+	Queue* r = new Queue;
+	r->data = x;
+	r->prev = head;
+	r->next = NULL;
+	head->next = r;
+	head = r;
+}
+
+int pop(Queue*& head) {
+	Queue* r = head;
+	int x = head->data;
+	head = head->next;
+	delete r;
+	return x;
+}
+
+void delete_queue(Queue* queue) {
+	while(!empty(queue))
+		pop(queue);
+}
+
+int main() {
+	Queue* r;
+	r = NULL;
+	int x; cin >> x;
+	Queue* head = new Queue;
+	head->data = x;
+	head->next = NULL;
+	head->prev = r;
+	r = head;
+	cin >> x;
+	while (x != 0) {
+		create(r,x);
+		cin >> x;
+	}
+
+	while (!empty(head))
+		cout << pop(head);
+}
