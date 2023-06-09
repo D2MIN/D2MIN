@@ -1,0 +1,48 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <utility>
+using namespace std;
+
+const int INF = 100000;
+
+int main()
+{
+    int n, s, f; // Колличество вершин, от какой вершины, к какой вершине
+    cin >> n >> s >> f;
+    s--;
+    f--;
+
+    //Таблица смежности
+    vector <vector <int> > a(n, vector <int>(n)); 
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            cin >> a[i][j];
+
+    vector <int> d(n, INF); //Вектор для нахождения минимального пути от вершины s до остальных (в начале везде бесконечность)
+    d[s] = 0; //вершина сама в себя = 0
+
+    priority_queue <pair <int, int > > q; //очередь отсортированый по уменьшению
+    q.push(make_pair(0, s));// первый элемент в очереди это начальный элемент от которого ищем
+
+    while (!q.empty()) { // пока очередь не пуста
+        int len = -q.top().first; // длина
+        int v = q.top().second; //вершина из очереди (по факту после 1 все вершины пойдут по порядку матрицы смежности)
+        q.pop();
+        for (int i = 0; i < n; i++) { // проходим по вершинам
+            if (d[i] > len + a[v][i] && a[v][i] >= 0) {  // если изначальная длина больше новой и длина не отрицательная
+                d[i] = len + a[v][i];  // меняем изначальную на новую
+                q.push(make_pair(-d[i], i)); // добавляем в очередь длину и вершину
+            }
+        }
+    }
+
+    if (d[f] == INF) cout << "False";
+    else cout << d[f];
+
+    for (auto i : d) {
+        cout << i;
+    }
+
+    return 0;
+}
