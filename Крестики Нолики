@@ -1,0 +1,152 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <cstdlib>
+using namespace std;
+
+//void player1(vector<vector<char> > pole) {
+//	int x; int y;
+//	cin >> x >> y;
+//	x--; y--;
+//	while (pole[x][y] != '_') {
+//		cout << "Поле занято";
+//		cin >> x, y;
+//	}
+//	pole[x][y] = 'O';
+//}
+//
+//void player2(vector<vector<char> > pole) {
+//	int x; int y;
+//	cin >> x >> y;
+//	x--; y--;
+//	while (pole[x][y] != '_') {
+//		cout << "Поле занято";
+//		cin >> x, y;
+//	}
+//	pole[x][y] = 'X';
+//}
+
+void print_pole(vector<vector<char> > pole) {
+	for (int i = 0; i < 3; i++) {
+		cout << endl;
+		for (int j = 0; j < 3; j++)
+			cout << pole[i][j] << " ";
+	}
+		
+}
+
+int chek_win(vector<vector<char> > pole) {
+	if (pole[0][0] == 'X' && pole[0][1] == 'X' && pole[0][2] == 'X' || pole[0][0] == 'O' && pole[0][1] == 'O' && pole[0][2] == 'O') {
+		if (pole[0][0] == 'X')
+			cout << "X-win" << endl;
+		else
+			cout << "O-win" << endl;
+		return 1;
+	}
+	if (pole[1][0] == 'X' && pole[1][1] == 'X' && pole[1][2] == 'X' || pole[1][0] == 'O' && pole[1][1] == 'O' && pole[1][2] == 'O') {
+		if (pole[1][0] == 'X')
+			cout << "X-win" << endl;
+		else
+			cout << "O-win" << endl;
+		return 1;
+	}
+	if (pole[2][0] == 'X' && pole[2][1] == 'X' && pole[2][2] == 'X' || pole[2][0] == 'O' && pole[2][1] == 'O' && pole[2][2] == 'O') {
+		if (pole[2][0] == 'X')
+			cout << "X-win" << endl;
+		else
+			cout << "O-win" << endl;
+		return 1;
+	}
+	if (pole[0][0] == 'X' && pole[1][0] == 'X' && pole[2][0] == 'X' || pole[0][0] == 'O' && pole[1][0] == 'O' && pole[2][0] == 'O') {
+		if (pole[0][0] == 'X')
+			cout << "X-win" << endl;
+		else
+			cout << "O-win" << endl;
+		return 1;
+	}
+	if (pole[0][1] == 'X' && pole[1][1] == 'X' && pole[2][1] == 'X' || pole[0][1] == 'O' && pole[1][1] == 'O' && pole[2][1] == 'O') {
+		if (pole[0][1] == 'X')
+			cout << "X-win" << endl;
+		else
+			cout << "O-win" << endl;
+		return 1;
+	}
+	if (pole[0][2] == 'X' && pole[1][2] == 'X' && pole[2][2] == 'X' || pole[0][2] == 'O' && pole[1][2] == 'O' && pole[2][2] == 'O') {
+		if (pole[0][2] == 'X')
+			cout << "X-win" << endl;
+		else
+			cout << "O-win" << endl;
+		return 1;
+	}
+	if (pole[0][0] == 'X' && pole[1][1] == 'X' && pole[2][2] == 'X' || pole[0][0] == 'O' && pole[1][1] == 'O' && pole[2][2] == 'O') {
+		if (pole[0][0] == 'X')
+			cout << "X-win" << endl;
+		else
+			cout << "O-win" << endl;
+		return 1;
+	}
+	if (pole[2][0] == 'X' && pole[1][1] == 'X' && pole[0][2] == 'X' || pole[2][0] == 'O' && pole[1][1] == 'O' && pole[0][2] == 'O') {
+		if (pole[2][0] == 'X')
+			cout << "X-win" << endl;
+		else
+			cout << "O-win" << endl;
+		return 1;
+	}
+	else
+		return 0;
+}
+
+int main() {
+	setlocale(LC_ALL, "Russian");
+	string Exit = "";
+	while (Exit != "Exit") {
+		vector <vector<char> >pole(3, vector<char>(3));
+		for (int i = 0; i < 3; i++)
+			for (int j = 0; j < 3; j++)
+				pole[i][j] = '_';
+		cout << endl;
+		system("cls");
+		print_pole(pole);
+
+		int x; int y;
+		int flag = 0;
+		while (flag < 8) {
+			cout << endl << "O - player: ";
+			
+				//---------1-----------
+			cin >> x >> y;
+			while (pole[x][y] != '_') {
+				cout << "Поле занято";
+				cin >> x >> y;
+			}
+			pole[x][y] = 'O';
+			flag++;
+				//---------1-----------
+			system("cls");
+			cout << flag;
+			print_pole(*&pole);
+			if (chek_win(pole)) {
+				flag = 0;
+				break;
+			}
+				//---------2-----------
+			cout << endl << "X - player: ";
+			cin >> x >> y;
+			while (pole[x][y] != '_') {
+				cout << "Поле занято";
+				cin >> x >> y;
+			}
+			pole[x][y] = 'X';
+			flag++;
+				//---------2-----------
+			system("cls");
+			cout << flag;
+			print_pole(*&pole);
+			if (chek_win(pole)) {
+				flag = 0;
+				break;
+
+			}
+		}
+	}
+}
