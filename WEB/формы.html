@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Пример формы HTML</title>
+</head>
+<body>
+	<h1>Пример формы HTML</h1>
+	<p>Однострочное текстовое поле:<p>
+	
+	<p><input type="text" id="name" value="Начальное значение"></p>
+	Текстовое поле email:
+	<p><input type="email" id="email" placeholder="Введите эмейл"></p>
+	Текстовое поле даты:
+	<p><input type="date" id="data" value="2023-02-01"></p>
+	Многострочное текстовое поле:
+	<p><textarea id="textarea">Начальное значение</textarea></p>
+	Список (combobox):
+	<p>
+		<select id="list_1">
+			<option id="value_1">Value 1</option>
+			<option id="value_2">Value 2</option>
+			<option id="value_3">Value 3</option>
+		</select>
+	</p>
+	Список (listbox с множественным выбором):
+	<p>
+		<select id="list_2" multiple="multiple">
+			<option id="value_1">Value 1</option>
+			<option id="value_2">Value 2</option>
+			<option id="value_3">Value 3</option>
+			<option id="value_3">Value 4</option>
+			<option id="value_3">Value 5</option>
+		</select>
+	</p>
+	Радиокнопки:
+	<br>
+
+	<label>
+		<input type="radio" name="radio_button"> Left button
+	</label>
+	<label>
+		<input type="radio" name="radio_button" checked> Right button
+	</label>
+
+	<br><br>
+	Чекбокс:
+	<p>
+		<label>
+			<input type="checkbox" name="checked"> Подпись чекбокса ставим справа
+		</label>
+	</p>
+
+	Кнопка отправки формы, при нажатии заполненные в форму данные отправятся в формате urlencoded методом POST или GET по адресу URL_отправки_данных:
+	<input type="submit" name="button_sub">
+</body>
+</html>
