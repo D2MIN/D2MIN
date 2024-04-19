@@ -1,0 +1,45 @@
+#include <iostream>
+#include <omp.h>
+#include <cmath>
+
+using namespace std;
+
+double f(double x) {
+    return sin(x);
+}
+
+int main() {
+    double a = 0.0; // Левая граница отрезка
+    double b = 500000.0; // Правая граница отрезка
+    int n = 500000; // Количество точек на отрезке
+
+    double h = (b - a) / (n - 1); // Шаг отрезка
+
+    // Массив производных
+    double* derivative = new double[n];
+
+    omp_set_num_threads(8); // Установить количество потоков
+
+    double start_time = omp_get_wtime(); // Время начала работы паралельной части
+
+    // Вычисляем производную
+#pragma omp parallel for
+    for (int i = 0; i < n; i++) {
+        double x_i = a + i * h;
+        derivative[i] = (f(x_i + h) - f(x_i - h)) / (2 * h);
+    }
+
+    double end_time = omp_get_wtime(); // Установка конечнго времени
+    double elapsed_time = (end_time - start_time) * 10000; // Разница начала и конца * 10000
+
+    cout << elapsed_time << endl;
+
+    // Вывод результата
+    //for (int i = 0; i < n; i++) {
+    //    cout << "f'(" << a + i * h << ") = " << derivative[i] << endl;
+    //}
+
+    delete[] derivative;
+
+    return 0;
+}
